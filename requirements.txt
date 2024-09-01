@@ -4,3 +4,4 @@ pillow==10.4.0
 channels[daphne]==4.1.0
 channels-redis==4.2.0
 channels-auth-token-middlewares==1.1.0
+drf-yasg==1.21.7

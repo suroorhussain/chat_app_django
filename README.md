@@ -38,3 +38,17 @@ Run the server using
 ```
 python manage.py runserver
 ```
+#### Docs
+You can see the API docs here
+```
+http://localhost:8000/swagger/
+```
+
+### Caveats and missing functionalities
+- [ ] No tests: This project does not have any unit tests or integration tests
+- [ ] Edit message for 5 minutes after sending
+- [ ] There should be indication of unread messages along with the count of unread messages for each conversation.
+- [ ] Users should be able to see the typing status.
+- [ ] Users should be able to search for other users using their username to initiate a conversation.
+- [ ] Include an easy way to run a linter.
+- [ ] Include some form of perfomance testing (may be using locust and faker?)

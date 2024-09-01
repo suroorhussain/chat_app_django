@@ -27,5 +27,4 @@ class ConversationSerializer(serializers.ModelSerializer):
             'type',
             'members',
             'id',
-            'unread_messages',
         ]
