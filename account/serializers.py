@@ -46,7 +46,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             data = super().validate(attrs)
     
             user = self.user
-            data["user_id"] = user.id
-            data["username"] = user.username
+            data.update(ProfileSerializer(
+                user,
+                context={'request':self.context['request']}
+                ).data
+            )
     
             return data
+    
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'avatar')
+        read_only_fields = ('id', 'email', 'username')
