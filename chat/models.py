@@ -14,6 +14,9 @@ class Conversations(models.Model):
     members = models.ManyToManyField('account.User', related_name='conversations')
     type = models.CharField(max_length=255, default=DM, choices=[(GROUP, 'group'), (DM, 'dm')])
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ['-updated_at']
 
