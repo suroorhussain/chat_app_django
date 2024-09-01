@@ -10,3 +10,10 @@ from account.models import User
 def is_valid_conversation_id(user, conversation_id):
         conversation = Conversations.objects.filter(id=conversation_id, members__in=[user])
         return conversation.exists()
+
+@database_sync_to_async
+def save_message(conversation_id, user, message):
+    conversation = Conversations.objects.get(id=conversation_id)
+    message = conversation.messages.create(sender=user, message=message)
+    conversation.save() # This changes the updated_at field of the conversation.
+    return message
