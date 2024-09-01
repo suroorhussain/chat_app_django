@@ -3,6 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import User
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -35,3 +37,16 @@ class SignupSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+            '''
+            Return user properties also as the response to a successful login
+            '''
+            data = super().validate(attrs)
+    
+            user = self.user
+            data["user_id"] = user.id
+            data["username"] = user.username
+    
+            return data
