@@ -3,11 +3,16 @@ from uuid import uuid4
 from django.db import models
 
 class Conversations(models.Model):
+
+    GROUP = 'group'
+    DM = 'dm'
+
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     members = models.ManyToManyField('account.User', related_name='conversations')
+    type = models.CharField(max_length=255, default=DM, choices=[(GROUP, 'group'), (DM, 'dm')])
 
     class Meta:
         ordering = ['-updated_at']
