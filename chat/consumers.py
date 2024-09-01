@@ -15,10 +15,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = self.scope["user"]
         if user.is_anonymous:
             await self.close()
-        self.conversation_id = str(await utils.get_conversation_id(user, **self.scope['url_route']['kwargs']))
-
-        await self.channel_layer.group_add(self.conversation_id, self.channel_name)
-        await self.accept()
+        self.conversation_id = self.scope['url_route']['kwargs']['conversation_id']
+        if await utils.is_valid_conversation_id(user, self.conversation_id):
+            await self.channel_layer.group_add(self.conversation_id, self.channel_name)
+            await self.accept()
+        else:
+            await self.close()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.conversation_id, self.channel_name)
